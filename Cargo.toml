@@ -1,0 +1,11 @@
+[package]
+name = "test-prikol"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+horrorshow = "0.8"
+env_logger = "0.10"
