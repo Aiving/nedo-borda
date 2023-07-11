@@ -41,11 +41,11 @@ pub async fn get_rendered_threads(data: web::Data<AppState>) -> impl Responder {
 pub async fn get_rendered_thread(path: web::Path<String>, data: web::Data<AppState>) -> impl Responder {
     let thread_id = path.into_inner().parse::<i32>().unwrap();
     let threads = data.threads.lock().unwrap();
-    let _thread = threads.iter().find(|&x| x.id == thread_id);
-    if _thread.is_none() {
+    let thread = threads.iter().find(|&x| x.id == thread_id);
+    if thread.is_none() {
         return HttpResponse::Found().append_header(("Location", format!("/threads"))).finish();
     }
-    let thread = _thread.as_deref().unwrap();
+    let thread = thread.as_deref().unwrap();
 
     HttpResponse::Ok().body(render_thread(&thread))
 }
@@ -58,19 +58,17 @@ pub async fn post_thread_reply(
 ) -> impl Responder {
     let thread_id = path.into_inner().parse::<i32>().unwrap();
     let mut threads = data.threads.lock().unwrap();
-    let _thread = &mut threads.iter_mut().find(|x| x.id == thread_id);
-    if _thread.is_none() {
+    let thread = &mut threads.iter_mut().find(|x| x.id == thread_id);
+    if thread.is_none() {
         return HttpResponse::Found().append_header(("Location", format!("/threads"))).finish();
     }
-    // WARNING: ГОВНОКОД!!!!!!!!!!!!!!!!!!!!!!!!!!! (я не придумал как по другому :troll:)
-    let thread = _thread.as_deref_mut().unwrap();
+    let thread = thread.as_deref_mut().unwrap();
     let last_post_id = thread.posts.iter().last().unwrap_or(&Post {
         id: 0,
         author: "".to_string(),
         content: "".to_string()
     }).id + 1;
 
-    println!("{}", form.message);
     (*thread).posts.push(Post {
         id: last_post_id + 1,
         author: form.author.to_owned(),
