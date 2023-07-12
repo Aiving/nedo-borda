@@ -1,0 +1,63 @@
+$bg0: #232A2E;
+$fg: #D3C6AA;
+$grey0: #7A8478;
+$aqua: #83C092;
+$statusline1: #A7C080;
+$statusline3: #E67E80;
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    outline: none;
+    border: none;
+}
+
+body {
+    background-color: $bg0;
+    color: $fg;
+}
+
+div.thread {
+    border: 1px solid $statusline1;
+    // box-shadow: 0px 0px 5px $statusline1, inset 0px 0px 5px $statusline1;
+    padding: 5px;
+    margin-bottom: 10px;
+
+    span.title {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    span.post-author, span.id {
+        color: $grey0;
+        margin-right: 5px;
+    }
+}
+
+div.thread-create {
+    border: 1px solid $statusline3;
+    // box-shadow: 0px 0px 5px $statusline3, inset 0px 0px 5px $statusline3;
+    padding: 5px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: auto 150px;
+    gap: 5px;
+
+    input, textarea, button {
+        border: 1px solid $aqua;
+        // box-shadow: 0px 0px 5px $aqua, inset 0px 0px 5px $aqua;
+    }
+
+    textarea#content {
+        resize: none;
+        grid-column: 1 / span 2;
+    }
+
+    input#author, input#name {
+        grid-column: 1;
+    }
+
+    button {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
+}
